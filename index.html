@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>张露怡 · 把 AI 用进真实场景的人</title>
+<meta name="description" content="张露怡的个人网站：AI 产品经理、智能座舱、Agent 与语音产品实践。" />
+<style>
+  :root {
+    --paper: #f7f6f2;
+    --paper-deep: #efeee8;
+    --ink: #1c1c1a;
+    --ink-soft: #5e5c56;
+    --ink-faint: #918e85;
+    --line: #dcd9d0;
+    --line-dark: #c4c0b5;
+    --accent: #ff5a36;
+    --accent-soft: #fff0ea;
+    --green: #275c48;
+    --green-soft: #e6eee9;
+    --white: #ffffff;
+    --max: 1040px;
+    --serif: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img, video { display: block; max-width: 100%; }
+
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(247, 246, 242, .93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(220, 217, 208, .82);
+  }
+  .nav {
+    max-width: var(--max);
+    height: 68px;
+    margin: 0 auto;
+    padding: 0 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .name { font-size: 16px; font-weight: 650; letter-spacing: .02em; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { font-size: 13px; color: var(--ink-soft); transition: color .2s ease; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links .contact {
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+  }
+
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 26px; }
+
+  .hero { padding: 108px 0 82px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 650;
+    letter-spacing: .16em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  h1 {
+    max-width: 790px;
+    font-family: var(--serif);
+    font-size: clamp(46px, 7vw, 78px);
+    font-weight: 600;
+    letter-spacing: -.045em;
+    line-height: 1.12;
+  }
+  .hero-lead {
+    max-width: 700px;
+    margin-top: 32px;
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.7vw, 27px);
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+  .hero-lead strong { color: var(--ink); font-weight: 600; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 38px; color: var(--ink-faint); font-size: 13px; }
+  .hero-meta span::before { content: "—"; margin-right: 8px; color: var(--line-dark); }
+
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--line);
+  }
+  .number { padding: 34px 24px 32px 0; border-right: 1px solid var(--line); }
+  .number:not(:first-child) { padding-left: 24px; }
+  .number:last-child { border-right: 0; }
+  .number strong { display: block; font-family: var(--serif); font-size: 34px; line-height: 1.1; font-weight: 600; }
+  .number span { display: block; margin-top: 9px; font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+
+  section { padding: 98px 0; border-bottom: 1px solid var(--line); }
+  .section-grid { display: grid; grid-template-columns: 190px 1fr; gap: 68px; }
+  .section-index { font-size: 13px; color: var(--ink-faint); padding-top: 8px; }
+  .section-index b { display: block; color: var(--accent); font-size: 12px; letter-spacing: .11em; margin-bottom: 7px; }
+  h2 {
+    max-width: 720px;
+    font-family: var(--serif);
+    font-size: clamp(32px, 4.8vw, 51px);
+    line-height: 1.24;
+    letter-spacing: -.035em;
+    font-weight: 600;
+  }
+  .lead { max-width: 710px; margin-top: 24px; color: var(--ink-soft); font-size: 17px; }
+  .lead em { color: var(--ink); font-style: normal; border-bottom: 1px solid var(--accent); }
+
+  .origin-story { margin-top: 54px; border-top: 1px solid var(--line-dark); }
+  .origin-row { display: grid; grid-template-columns: 150px 1fr; gap: 26px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+  .origin-row .year { font-family: var(--serif); font-size: 18px; color: var(--accent); }
+  .origin-row h3 { font-size: 17px; margin-bottom: 7px; }
+  .origin-row p { color: var(--ink-soft); font-size: 15px; max-width: 660px; }
+
+  .quote {
+    margin-top: 52px;
+    padding: 32px 36px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.75;
+  }
+
+  .journey { margin-top: 54px; }
+  .station { display: grid; grid-template-columns: 132px 1fr; gap: 34px; padding: 28px 0; border-top: 1px solid var(--line); }
+  .station:last-child { border-bottom: 1px solid var(--line); }
+  .station .place { font-size: 13px; color: var(--ink-faint); }
+  .station h3 { font-family: var(--serif); font-size: 23px; line-height: 1.35; font-weight: 600; }
+  .station p { margin-top: 9px; color: var(--ink-soft); font-size: 15px; max-width: 680px; }
+  .station .tags { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag { padding: 4px 9px; border: 1px solid var(--line); border-radius: 999px; font-size: 11px; color: var(--ink-soft); background: rgba(255,255,255,.45); }
+
+  .case-list { margin-top: 56px; display: grid; gap: 34px; }
+  .case {
+    background: var(--white);
+    border: 1px solid var(--line-dark);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .case-head { padding: 36px 38px 30px; border-bottom: 1px solid var(--line); }
+  .case-kicker { font-size: 12px; color: var(--accent); letter-spacing: .11em; margin-bottom: 12px; }
+  .case h3 { font-family: var(--serif); font-size: 31px; line-height: 1.3; font-weight: 600; }
+  .case-sub { margin-top: 10px; color: var(--ink-soft); font-size: 14px; }
+  .case-body { padding: 34px 38px 38px; }
+  .problem-solution { display: grid; grid-template-columns: 1fr 1fr; gap: 42px; }
+  .case-col h4 { font-size: 12px; letter-spacing: .09em; color: var(--ink-faint); margin-bottom: 11px; }
+  .case-col p, .case-col li { color: var(--ink-soft); font-size: 15px; }
+  .case-col ul { list-style: none; }
+  .case-col li { position: relative; padding-left: 16px; margin-bottom: 7px; }
+  .case-col li::before { content: "·"; position: absolute; left: 2px; color: var(--accent); }
+  .results { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 30px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .results.three { grid-template-columns: repeat(3, 1fr); }
+  .result { padding: 18px 18px 17px 0; }
+  .result:not(:first-child) { padding-left: 18px; border-left: 1px solid var(--line); }
+  .result strong { display: block; font-family: var(--serif); font-size: 25px; font-weight: 600; }
+  .result span { display: block; color: var(--ink-faint); font-size: 12px; margin-top: 3px; }
+
+  .media-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 30px; }
+  .media-item { margin: 0; }
+  .media-frame {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #f3f2ed;
+  }
+  .media-frame img { width: 100%; height: auto; object-fit: contain; }
+  .media-frame video { width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: #111; }
+  .media-item figcaption {
+    margin-top: 10px;
+    color: var(--ink-faint);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .project-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+  .project-link {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 10px 15px; border: 1px solid var(--ink); font-size: 13px;
+    transition: background .2s ease, color .2s ease;
+  }
+  .project-link:hover { background: var(--ink); color: var(--white); }
+  .project-link.secondary { border-color: var(--line-dark); color: var(--ink-soft); }
+
+  .future-intro {
+    margin-top: 46px;
+    padding: 34px 36px;
+    background: var(--green);
+    color: var(--white);
+  }
+  .future-intro p { max-width: 760px; font-family: var(--serif); font-size: 22px; line-height: 1.7; }
+  .future-intro strong { color: #dff3e7; }
+  .trends { margin-top: 34px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .trend { padding: 25px 25px 24px; border: 1px solid var(--line-dark); background: rgba(255,255,255,.42); }
+  .trend .trend-no { font-family: var(--serif); color: var(--accent); font-size: 16px; }
+  .trend h3 { margin-top: 10px; font-family: var(--serif); font-size: 21px; }
+  .trend p { margin-top: 8px; color: var(--ink-soft); font-size: 14px; }
+  .love { margin-top: 36px; padding-top: 30px; border-top: 1px solid var(--line-dark); }
+  .love h3 { font-family: var(--serif); font-size: 25px; }
+  .love p { max-width: 720px; margin-top: 12px; color: var(--ink-soft); }
+
+  footer { padding: 86px 0 78px; }
+  footer h2 { font-size: clamp(34px, 5vw, 54px); }
+  .email { display: inline-block; margin-top: 26px; font-family: var(--serif); font-size: clamp(22px, 3.2vw, 34px); border-bottom: 1px solid var(--ink); }
+  .foot-meta { margin-top: 38px; display: flex; flex-wrap: wrap; gap: 20px; color: var(--ink-faint); font-size: 12px; }
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .62s ease, transform .62s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 760px) {
+    .nav-links a:not(.contact) { display: none; }
+    .hero { padding: 72px 0 58px; }
+    .numbers { grid-template-columns: repeat(2, 1fr); }
+    .number:nth-child(2) { border-right: 0; }
+    .number:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .section-grid { grid-template-columns: 1fr; gap: 20px; }
+    section { padding: 72px 0; }
+    .section-index { display: flex; gap: 8px; }
+    .section-index b { display: inline; }
+    .origin-row, .station { grid-template-columns: 1fr; gap: 8px; }
+    .problem-solution, .media-grid, .trends { grid-template-columns: 1fr; }
+    .case-head, .case-body { padding-left: 22px; padding-right: 22px; }
+    .results { grid-template-columns: 1fr; }
+    .result, .result:not(:first-child) { padding: 14px 0; border-left: 0; border-top: 1px solid var(--line); }
+    .result:first-child { border-top: 0; }
+  }
+</style>
+</head>
+<body>
+<header class="nav-wrap">
+  <nav class="nav">
+    <a class="name" href="#top">张露怡</a>
+    <div class="nav-links">
+      <a href="#why">为什么</a>
+      <a href="#journey">经历</a>
+      <a href="#work">案例</a>
+      <a href="#future">未来</a>
+      <a class="contact" href="#contact">联系我</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="container">
+    <section class="hero">
+      <div class="eyebrow">AI product · Agent · Smart cabin</div>
+      <h1>把 AI 用进<br />真实世界的人</h1>
+      <p class="hero-lead">我不是从一门“对口专业”抵达 AI。大二读完吴军的《人工智能》后，我开始用 Python 解决身边的小问题；后来，我把同一种方法带进论文、业务、Agent 和量产汽车。<strong>从数据出发，把复杂问题变成可执行、可验证、可迭代的产品。</strong></p>
+      <div class="hero-meta">
+        <span>2027 届硕士</span>
+        <span>AI 产品经理</span>
+        <span>智能座舱与语音方向</span>
+      </div>
+    </section>
+
+    <div class="numbers">
+      <div class="number"><strong>3+</strong><span>参与路虎、保时捷、吉利等量产车型</span></div>
+      <div class="number"><strong>37.1%</strong><span>Agent 调度优化后模型调用量下降</span></div>
+      <div class="number"><strong>90%</strong><span>车载 Badcase 问题闭环率</span></div>
+      <div class="number"><strong>60%+</strong><span>语音结果无编辑率，从 30% 提升</span></div>
+    </div>
+
+    <section id="why" class="reveal">
+      <div class="section-grid">
+        <aside class="section-index"><b>01</b>为什么是我</aside>
+        <div>
+          <h2>我的 AI 起点，不是一门专业，而是一次主动动手</h2>
+          <p class="lead">我第一次真正理解“数据”，是在大二读吴军的《人工智能》之后。那时我意识到：未来很多判断，都可以不再只靠经验，而是用数据寻找更好的答案。于是我开始自学 Python，并给自己定了一个很简单的标准——<em>学会，不等于看懂；只有做出来，才算掌握。</em></p>
+
+          <div class="origin-story">
+            <div class="origin-row">
+              <div class="year">从小工具开始</div>
+              <div><h3>先解决身边真实、具体的问题</h3><p>玩骰子时，我写概率分布工具，推算下一步怎么做胜率更高；班级抽签时，我把性别、历史参与情况写进规则，一键生成 Excel 同步到群里。它们不复杂，却让我第一次体会到：代码和数据可以直接改变效率。</p></div>
+            </div>
+            <div class="origin-row">
+              <div class="year">从玩具到方法</div>
+              <div><h3>用竞赛检验自己的能力</h3><p>为了验证自己不是“只会写小玩具”，我主动参加泰迪杯数据分析与挖掘竞赛，获得省级一等奖；随后与伙伴参加数学建模竞赛，获得校级一等奖。数据分析开始从兴趣，变成一套稳定的方法。</p></div>
+            </div>
+            <div class="origin-row">
+              <div class="year">从方法到跨界</div>
+              <div><h3>把 AI 带回自己的学科</h3><p>研究生期间，我将 AI 与环境毒理学结合，在 Gondwana Research 发表中科院 1 区综述《Artificial intelligence-driven environmental toxicology: Emerging strategies for microplastics risk assessment》；一次中国澳门旅行中，我又和朋友搭建了碳排放 A2A Agent。</p></div>
+            </div>
+          </div>
+
+          <div class="quote">我并不是后来“转向”了 AI。回头看，我一直在做同一件事：<strong>把一个模糊问题拆成数据、规则和流程，再把它做成能被真实使用的工具。</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="journey" class="reveal">
+      <div class="section-grid">
+        <aside class="section-index"><b>02</b>我怎么走到这里</aside>
+        <div>
+          <h2>从“会用 AI”，到“会做 AI 产品”</h2>
+          <p class="lead">真正进入行业之后，我刻意让每一段经历都补齐一块能力：先跑通商业闭环，再理解语音与座舱，随后深入 Agent、模型评测和量产交付。</p>
+
+          <div class="journey">
+            <div class="station">
+              <div class="place">初创公司</div>
+              <div><h3>第一次让 AI 服务真实生意</h3><p>在 Workflow 刚兴起时，我们用 Workflow 嵌套 RPA，完成 ToG 图文网站从内容生成到运营的自动化，并最终在广交会上线。它让我第一次看到：AI 的价值不是“生成一次”，而是接进一条完整业务链路。</p><div class="tags"><span class="tag">Workflow</span><span class="tag">RPA</span><span class="tag">商业落地</span></div></div>
+            </div>
+            <div class="station">
+              <div class="place">思必驰</div>
+              <div><h3>第一次把 AI 装进量产汽车</h3><p>对接奇瑞、路虎、保时捷整车项目，参与 20+ 车载能力域协同、GUI+VUI 交互、行车安全拦截和量产准出。端到端模型的进展让我意识到，语音会从“下指令”走向“理解上下文”，而座舱正是最重要的 AI 入口之一。</p><div class="tags"><span class="tag">智能座舱</span><span class="tag">语音交互</span><span class="tag">量产准出</span></div></div>
+            </div>
+            <div class="station">
+              <div class="place">百度</div>
+              <div><h3>把模型能力变成低门槛的产品</h3><p>在海外输入法场景中，我做语音策略、模型评测与轻量交互；同时搭建自动化营销 Agent，把选题、视觉企划、文案、生图与发布运营串成可复用工作流，将单次运营流程从约 1 小时压缩到 5 分钟，并推广至项目组矩阵账号。</p><div class="tags"><span class="tag">Agent Workflow</span><span class="tag">Vibe Coding</span><span class="tag">模型评测</span></div></div>
+            </div>
+            <div class="station">
+              <div class="place">腾讯元宝</div>
+              <div><h3>深入 Agent 调度、评测与端侧交互</h3><p>策略侧负责录音意图唤醒与追问效果评估，搭建意图体系、专项评测集和数据闭环；交互侧从 0 到 1 上线播放器、PC 端语音输入与 TTS 播报。任务编排优化后，模型调用量下降 37.1%，核心算力成本降低 50%。</p><div class="tags"><span class="tag">任务编排</span><span class="tag">效果评测</span><span class="tag">0-1 产品</span></div></div>
+            </div>
+            <div class="station">
+              <div class="place">木卫四</div>
+              <div><h3>从用户痛点出发定义车载产品</h3><p>面向多人共用座舱的隐私痛点，独立完成“车载安心助手 / 文件保险柜”的 0-1 产品定义，拆解加密存储、多账号权限与异常访问兜底，并协同整车、算法、测试团队推进极氪 009 量产落地。</p><div class="tags"><span class="tag">用户洞察</span><span class="tag">整车协同</span><span class="tag">0-1 定义</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="reveal">
+      <div class="section-grid">
+        <aside class="section-index"><b>03</b>我具体怎么做</aside>
+        <div>
+          <h2>挑两个例子，讲讲我是怎么落地的</h2>
+          <p class="lead">一个案例证明我能把分散的模型能力编排成业务工具；另一个案例证明我理解汽车场景对实时性、安全性与量产稳定性的硬约束。</p>
+
+          <div class="case-list">
+            <article class="case">
+              <div class="case-head">
+                <div class="case-kicker">案例一 · 百度国际化 · 自动化营销 Agent</div>
+                <h3>把一次性的运营“手艺”，变成团队可以反复使用的工作流</h3>
+                <div class="case-sub">Agent Workflow · 海外 KOL 营销 · 已在内网落地复用</div>
+              </div>
+              <div class="case-body">
+                <div class="problem-solution">
+                  <div class="case-col"><h4>原来的问题</h4><p>海外营销账号需要持续完成选题、视觉企划、文案生成、生图与发布运营。能力散落在不同工具里，步骤多、依赖个人经验，单次内容生产与运营约需 1 小时，难以稳定复制到更多矩阵账号。</p></div>
+                  <div class="case-col"><h4>我的做法</h4><ul><li>将账号运营拆成选题分析、视觉企划、文案生成、生图与发布等独立节点</li><li>通过 Workflow 编排模型与 API，打通内容生产到持续运营的全链路</li><li>加入反思闭环与知识库约束，持续校准内容方向和生成质量</li><li>以 Vibe Coding 封装为标准化 Web 产品，并推广至项目组矩阵账号复用</li></ul></div>
+                </div>
+                <div class="results">
+                  <div class="result"><strong>100+</strong><span>账号持续运营累计增粉</span></div>
+                  <div class="result"><strong>500+</strong><span>单篇内容最高浏览量</span></div>
+                  <div class="result"><strong>1 小时 → 5 分钟</strong><span>单次人工运营流程</span></div>
+                  <div class="result"><strong>矩阵账号复用</strong><span>提升生产效率与标准化水平</span></div>
+                </div>
+                <div class="media-grid">
+                  <figure class="media-item">
+                    <div class="media-frame">
+                      <img src="assets/marketing-agent-workflow.png" alt="自动化营销 Agent Workflow 全链路图" />
+                    </div>
+                    <figcaption>自动化营销 Agent 的全链路 Workflow：从数据读取、达人筛选与裂变，到视觉企划、文案生成和图片生成。</figcaption>
+                  </figure>
+                  <figure class="media-item">
+                    <div class="media-frame">
+                      <video controls preload="metadata" playsinline>
+                        <source src="assets/marketing-agent-demo.mp4" type="video/mp4" />
+                        你的浏览器暂不支持视频播放，请使用下方按钮单独打开视频。
+                      </video>
+                    </div>
+                    <figcaption>产品演示视频：点击播放器中央的播放按钮即可观看，支持进度拖动和全屏播放。</figcaption>
+                  </figure>
+                </div>
+                <div class="project-links">
+                  <a class="project-link" href="https://github.com/luyiizhang/hahah" target="_blank" rel="noopener noreferrer">查看代码 / GitHub →</a>
+                  <a class="project-link secondary" href="assets/marketing-agent-demo.mp4" target="_blank" rel="noopener noreferrer">单独打开演示视频 →</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="case">
+              <div class="case-head">
+                <div class="case-kicker">案例二 · 思必驰 · 智能座舱量产</div>
+                <h3>让一辆车听懂人话，也知道什么时候不能执行</h3>
+                <div class="case-sub">奇瑞 / 路虎 / 保时捷 · 舱驾协同 · 车规级量产准出</div>
+              </div>
+              <div class="case-body">
+                <div class="problem-solution">
+                  <div class="case-col"><h4>原来的问题</h4><p>导航、辅助驾驶、车控、多媒体和通讯等能力来自不同域；用户一句自然语言可能同时涉及多个系统。汽车不仅要“听懂”，还必须在行车场景中保证实时、稳定和安全。</p></div>
+                  <div class="case-col"><h4>我的做法</h4><ul><li>搭建覆盖 20+ 能力域的统一调用链路</li><li>设计行车语义拒识与置信度分级拦截，控制安全边界</li><li>结合 GUI+VUI 输出舱驾联动 Workflow 与完整 PRD</li><li>按 ASR/NLU/DM/TTS/API 分层归因，联动算法和整车团队修复</li></ul></div>
+                </div>
+                <div class="results three">
+                  <div class="result"><strong>20+</strong><span>车载能力域协同</span></div>
+                  <div class="result"><strong>30+</strong><span>车载 Badcase 闭环</span></div>
+                  <div class="result"><strong>90%</strong><span>问题闭环率</span></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="future" class="reveal">
+      <div class="section-grid">
+        <aside class="section-index"><b>04</b>我怎么看未来</aside>
+        <div>
+          <h2>未来的智能座舱，不是在车里装一个 ChatGPT</h2>
+          <p class="lead">我更期待的是：汽车能结合人、车、路与当下任务，在正确的时间调用正确的能力，完成服务；同时知道什么时候应该确认、降级，甚至保持沉默。</p>
+
+          <div class="future-intro"><p>智能座舱的终局，会从“能回答问题的屏幕”，走向<strong>理解上下文、持续学习用户、连接座舱与驾驶能力的车载 Agent</strong>。</p></div>
+
+          <div class="trends">
+            <div class="trend"><div class="trend-no">01</div><h3>从被动指令到主动服务</h3><p>多模态感知让车理解乘员、环境与任务状态。价值不只是“用户说一句、车做一下”，而是提前识别需求并在恰当时机提供帮助。</p></div>
+            <div class="trend"><div class="trend-no">02</div><h3>从云端能力到端云协同</h3><p>实时性、隐私和算力约束决定了车端模型不会被云端完全替代。端侧处理高频与隐私任务，云端承担复杂推理，会成为长期形态。</p></div>
+            <div class="trend"><div class="trend-no">03</div><h3>从座舱助手到舱驾融合 Agent</h3><p>导航、车控、辅助驾驶、多媒体不该是孤岛。真正自然的交互，是围绕用户目标编排多个能力域，并把安全边界写进每一步决策。</p></div>
+            <div class="trend"><div class="trend-no">04</div><h3>从千人一面到持续个性化</h3><p>记忆、偏好与场景学习会让每辆车逐渐理解自己的用户。但个性化必须与权限、可解释和隐私保护一起设计，而不是无限收集数据。</p></div>
+          </div>
+
+          <div class="love">
+            <h3>为什么我想继续留在汽车行业</h3>
+            <p>我喜欢汽车，也喜欢它对产品提出的苛刻要求：这里容不下只停留在 Demo 的 AI。一次自然交互背后，同时牵涉模型、芯片、网络、整车系统、交互与安全。正因为难，它才是最能检验 AI 产品经理是否真正理解用户、技术和落地的一块场域。我希望继续站在语音、Agent 与智能座舱的交叉点上，做能进入量产、被用户每天使用的产品。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer id="contact">
+  <div class="container">
+    <div class="eyebrow">Let’s talk</div>
+    <h2>如果你也在思考，<br />AI 应该如何进入汽车。</h2>
+    <a class="email" href="mailto:2013551874@qq.com">2013551874@qq.com</a>
+    <div class="foot-meta">
+      <span>张露怡 · AI 产品经理 · 2027 届</span>
+      <a href="https://github.com/luyiizhang/hahah" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="#">下载简历（待补充）</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
+</script>
+</body>
+</html>
